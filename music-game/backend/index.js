@@ -28,19 +28,21 @@ app.get("/create-room", (req, res) => {
 });
 
 io.on('connection', (socket) => {
-  console.log('New client connected:', socket.id);
+    console.log('New client connected:', socket.id);
 
-  socket.on('joinRoom', ({ roomCode, teamName }) => {
-    const success = roomManager.joinRoom(roomCode, teamName);
-    if (success) {
-      socket.join(roomCode);
+    socket.on('joinRoom', ({ roomCode, teamName }) => {
+        socket.join(roomCode);
         io.to(roomCode).emit('teamJoined', roomManager.getRoomTeams(roomCode)); 
-    }
-  });
+    });
+    
+    socket.on('startGame', (roomCode) => {
+        io.to(roomCode).emit('gameStarted');
+    });
 
-  socket.on('disconnect', () => {
-    console.log('Client disconnected:', socket.id);
-  });
+
+    socket.on('disconnect', () => {
+        console.log('Client disconnected:', socket.id);
+    });
 });
 
 server.listen(port, () => {

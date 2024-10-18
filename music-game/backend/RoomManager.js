@@ -2,6 +2,7 @@ export class Room {
   constructor(roomCode) {
     this.roomCode = roomCode;
     this.teams = [];
+    this.isGameStarted = false;
   }
 
   addTeam(teamName) {
@@ -10,6 +11,14 @@ export class Room {
 
   getTeams() {
     return this.teams;
+  }
+
+  startGame() {
+    this.isGameStarted = true;
+  }
+
+  hasGameStarted() {
+    return this.isGameStarted;
   }
 }
 
@@ -28,6 +37,15 @@ export class RoomManager {
     const room = this.rooms[roomCode];
     if (room) {
       room.addTeam(teamName);
+      return true;
+    }
+    return false;
+  }
+
+  startGameInRoom(roomCode) {
+    const room = this.rooms[roomCode];
+    if (room) {
+      room.startGame();
       return true;
     }
     return false;

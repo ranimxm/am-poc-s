@@ -16,9 +16,7 @@ export default function StartScreen() {
         .then(response => response.json())
         .then(data => {
             setRoomCode(data.roomCode);
-            
-            socket.emit('joinRoom', { roomCode: data.roomCode});
-
+            socket.emit('joinRoom', { roomCode: data.roomCode });
             socket.on("teamJoined", (updatedTeams) => {
                 setTeams(updatedTeams);
             });
@@ -28,7 +26,8 @@ export default function StartScreen() {
     }, []);
 
     const handleStart = () => {
-        navigate(`/docent/musicFragment`);
+        socket.emit('startGame', roomCode);
+        navigate("/docent/musicFragment");
     };
 
     return (
