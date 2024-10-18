@@ -1,15 +1,17 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Docent from './pages/docent'
-import Student from './pages/student'
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import StartScreen from './pages/docent/start';
 
 export default function App() {
+
 
   return (
     <Router>
       <Routes>
-        <Route path="/docent" element={<Docent />} />
-        <Route index element={<Student />} />
+        {/* docent routes */}
+        <Route path="/docent" element={<StartScreen />} />
+
       </Routes>
     </Router>
-  )
-}
+  );
+};
