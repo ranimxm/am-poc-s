@@ -1,7 +1,17 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function StartScreen() {
+    const [roomCode, setRoomCode] = useState("");
     const navigate = useNavigate();
+
+    useEffect(() => {
+        fetch("/create-room", {
+            method: "GET"
+        })
+        .then(response => response.json())
+        .then(data => setRoomCode(data.roomCode));
+    }, []);
 
     const handleStart = () => {
         navigate("/docent/musicFragment");
@@ -11,7 +21,7 @@ export default function StartScreen() {
         <div>
             <div>
                 <h3>Join the game using code:</h3>
-                <div>00000</div>
+                <div>{roomCode}</div>
                 <button onClick={handleStart}>Start</button>
             </div>
             <div>
