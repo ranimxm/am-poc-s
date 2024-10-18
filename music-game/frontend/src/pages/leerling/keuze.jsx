@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function KeuzeScherm() { 
-    const [timeLeft, setTimeLeft] = useState(10);
+    const [timeLeft, setTimeLeft] = useState(15);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -29,10 +29,10 @@ export default function KeuzeScherm() {
         <div className="screen-container">
         <h3>Kies je optie:</h3>
         <div className="grid-options">
-            <div className="option" style={{ backgroundColor: "#ccc" }}></div>
-            <div className="option" style={{ backgroundColor: "#666" }}></div>
-            <div className="option" style={{ backgroundColor: "#333" }}></div>
-            <div className="option" style={{ backgroundColor: "#999" }}></div>
+            <div className="option" style={{ backgroundColor: "#ccc" }}>2</div>
+            <div className="option" style={{ backgroundColor: "#666" }}>2</div>
+            <div className="option" style={{ backgroundColor: "#333" }}>2</div>
+            <div className="option" style={{ backgroundColor: "#999" }}>2</div>
         </div>
         <div className="emotion-circle">
             <span>{timeLeft}</span>

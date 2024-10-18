@@ -39,13 +39,9 @@ export default function StartScreen() {
             </div>
             <div>
                 <h3>Teams:</h3>
-                {teams.length > 0 ? (
-                    teams.map((team, index) => (
-                        <div key={index}>{team}</div>
-                    ))
-                ) : (
-                    <p>No teams yet</p>
-                )}
+                {teams.map((team, index) => (
+                    <div key={index}>{team}</div>
+                ))}
             </div>
         </div>
     )

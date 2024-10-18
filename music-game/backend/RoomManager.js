@@ -3,10 +3,12 @@ export class Room {
     this.roomCode = roomCode;
     this.teams = [];
     this.isGameStarted = false;
+    this.scores = {};
   }
 
   addTeam(teamName) {
     this.teams.push(teamName);
+    this.scores[teamName] = 0;
   }
 
   getTeams() {
@@ -46,6 +48,16 @@ export class RoomManager {
     const room = this.rooms[roomCode];
     if (room) {
       room.startGame();
+      return true;
+    }
+    return false;
+  }
+
+  submitChoice(roomCode, teamName, timeTaken) {
+    const room = this.rooms[roomCode];
+    if (room) {
+      const score = 100 - timeTaken * 10;
+      room.updateScore(teamName, score);
       return true;
     }
     return false;
