@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import io from "socket.io-client";
+
+const socket = io("http://localhost:8080");
 
 export default function StartScreen() {
     const [roomCode, setRoomCode] = useState("");
+    const [teams, setTeams] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -10,11 +14,21 @@ export default function StartScreen() {
             method: "GET"
         })
         .then(response => response.json())
-        .then(data => setRoomCode(data.roomCode));
+        .then(data => {
+            setRoomCode(data.roomCode);
+            
+            socket.emit('joinRoom', { roomCode: data.roomCode});
+
+            socket.on("teamJoined", (updatedTeams) => {
+                setTeams(updatedTeams);
+            });
+        });
+
+        return () => socket.off("teamJoined"); 
     }, []);
 
     const handleStart = () => {
-        navigate("/docent/musicFragment");
+        navigate(`/docent/musicFragment`);
     };
 
     return (
@@ -25,10 +39,14 @@ export default function StartScreen() {
                 <button onClick={handleStart}>Start</button>
             </div>
             <div>
-                <span>Team 1</span>
-                <span>Team 2</span>
-                <span>Team 3</span>
-                <span>Team 4</span>
+                <h3>Teams:</h3>
+                {teams.length > 0 ? (
+                    teams.map((team, index) => (
+                        <div key={index}>{team}</div>
+                    ))
+                ) : (
+                    <p>No teams yet</p>
+                )}
             </div>
         </div>
     )

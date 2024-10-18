@@ -27,6 +27,22 @@ app.get("/create-room", (req, res) => {
     res.json({ roomCode });
 });
 
+io.on('connection', (socket) => {
+  console.log('New client connected:', socket.id);
+
+  socket.on('joinRoom', ({ roomCode, teamName }) => {
+    const success = roomManager.joinRoom(roomCode, teamName);
+    if (success) {
+      socket.join(roomCode);
+        io.to(roomCode).emit('teamJoined', roomManager.getRoomTeams(roomCode)); 
+    }
+  });
+
+  socket.on('disconnect', () => {
+    console.log('Client disconnected:', socket.id);
+  });
+});
+
 server.listen(port, () => {
     console.log(`Server is running on port http://localhost:${port}`);
 });
