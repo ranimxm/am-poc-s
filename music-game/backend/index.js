@@ -31,12 +31,18 @@ io.on('connection', (socket) => {
     console.log('New client connected:', socket.id);
 
     socket.on('joinRoom', ({ roomCode, teamName }) => {
-        socket.join(roomCode);
-        io.to(roomCode).emit('teamJoined', roomManager.getRoomTeams(roomCode)); 
+        const roomJoined = roomManager.joinRoom(roomCode, teamName);
+        if (roomJoined) {
+            socket.join(roomCode);
+            io.to(roomCode).emit('teamJoined', roomManager.getRoomTeams(roomCode));
+        }
     });
     
     socket.on('startGame', (roomCode) => {
-        io.to(roomCode).emit('gameStarted');
+        const gameStarted = roomManager.startGameInRoom(roomCode);
+        if (gameStarted) {
+            io.to(roomCode).emit('gameStarted');
+        }
     });
 
 
