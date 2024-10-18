@@ -1,20 +1,17 @@
 import { isLocalhost } from "./is-localhost.js";
 
 const socket = io(isLocalhost());
+const piano = document.getElementById("piano");
 
-const sendMessage = (event) => {
-    event.preventDefault();
-    const message = document.getElementById("message").value;
-    socket.emit("chat message", message);
-    document.getElementById("message").value = "";
-};
-
-socket.on("chat message", (msg) => {
-    const item = document.createElement("li");
-    item.textContent = msg;
-    document.getElementById("messages").appendChild(item);
+piano.addEventListener("click", (event) => {
+    const note = event.target.dataset.note;
+    if (note) {
+        console.log("note playing", note);
+        socket.emit("play_note", {instrument: "note played", note});
+    }
 });
-
-document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("messageForm").addEventListener("submit", sendMessage);
+socket.on("note_played", (data) => {
+    const note = data.note;
+    const instrument = data.instrument;
+    console.log(`Received note: ${note} and ${instrument}`);
 });

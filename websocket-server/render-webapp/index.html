@@ -7,12 +7,24 @@
     <script src="https://cdn.socket.io/4.7.1/socket.io.min.js"></script>
     <script defer type="module" src="./chat.js"></script>
     <script type="module" src="./is-localhost.js"></script>
+    <style>
+        #piano {
+            display: flex;
+            gap: 10px;
+        }
+        button {
+            font-size: 2em;
+            padding: 10px;
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
-    <ul id="messages"></ul>
-    <form id="messageForm" autocomplete="off">
-        <input id="message" />
-        <button type="submit">Send</button>
-    </form>
+    <div id="piano">
+        <button data-note="C4">C</button>
+        <button data-note="D4">D</button>
+        <button data-note="E4">E</button>
+    </div>
 </body>
 </html>

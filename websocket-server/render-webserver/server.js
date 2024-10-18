@@ -2,6 +2,8 @@ const express = require("express");
 const http = require("http");
 const socketIo = require("socket.io");
 const cors = require("cors");
+const { log } = require("console");
+const { emit, on } = require("process");
 
 const app = express();
 const server = http.createServer(app);
@@ -9,6 +11,7 @@ const port = 8080;
 const io = socketIo(server, {
     cors: {
         origin: "*",
+        methods: ["GET", "POST"]
     }
 });
 
@@ -21,9 +24,8 @@ app.get("/", (req, res) => {
 io.on("connection", (socket) => { 
     console.log("A user connected:", socket.id);
 
-    socket.on("chat message", (msg) => {
-        console.log("Message received:", msg);
-        io.emit("chat message", msg);
+    socket.on("play_note", (data) => {
+        socket.broadcast.emit("note_played", { instrument: data.instrument, note: data.note });
     });
 
     socket.on("disconnect", () => {
