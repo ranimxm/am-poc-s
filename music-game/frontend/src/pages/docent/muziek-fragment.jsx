@@ -58,6 +58,7 @@ export default function MusicFragment({ musicFragments }) {
                 break;
         }
     };
+
     return (
         <div className="screen-container">
             {phase === 'playMusic' && (
