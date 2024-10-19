@@ -7,6 +7,8 @@ import LuisterScherm from "./pages/leerling/luisteren";
 import KeuzeScherm from "./pages/leerling/keuze";
 import ResultaatScherm from "./pages/leerling/resultaat";
 import StudentScreen from "./pages/leerling/start";
+import { RoomProvider } from './util/room-context';
+import { SocketContext, socket  } from './util/socket-context';
 
 export default function App() {
   const musicFragments = [
@@ -14,18 +16,25 @@ export default function App() {
   ];
 
   return (
-    <Router>
-      <Routes>
-        {/* docent routes */}
-        <Route path="/docent" element={<StartScreen />} />
-        <Route path="/docent/musicFragment" element={<MusicFragment musicFragments={musicFragments} />} />
-        <Route path="/docent/rankings" element={<RankingsScreen />} />
-        {/* leerlingen routes */}
-        <Route index element={<StudentScreen />} />
-        <Route path="/luisteren" element={<LuisterScherm />} />
-        <Route path="/keuze" element={<KeuzeScherm />} />
-        <Route path="/resultaat" element={<ResultaatScherm />} />
-      </Routes>
-    </Router>
+    <SocketContext.Provider value={socket}>
+      <Router>
+        <Routes>
+          {/* docent */}
+          <Route path="/docent" element={<StartScreen />} />
+          <Route path="/docent/musicFragment" element={<MusicFragment musicFragments={musicFragments} />} />
+          <Route path="/docent/rankings" element={<RankingsScreen />} />
+          
+          {/* leerlingen */}
+          <Route index path="/*" element={<RoomProvider>
+            <Routes>
+              <Route path="/" element={<StudentScreen />} />
+              <Route path="/luisteren" element={<LuisterScherm />} />
+              <Route path="/keuze" element={<KeuzeScherm />} />
+              <Route path="/resultaat" element={<ResultaatScherm />} />
+            </Routes>
+          </RoomProvider>} />
+        </Routes>
+      </Router>
+    </SocketContext.Provider>
   );
-};
+}
