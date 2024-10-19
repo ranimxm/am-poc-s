@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import io from "socket.io-client";
-
-const socket = io("http://localhost:8080");
+import { SocketContext } from "../../util/socket-context";
 
 export default function StartScreen() {
+    const socket = useContext(SocketContext);
     const [roomCode, setRoomCode] = useState("");
     const [teams, setTeams] = useState([]);
     const navigate = useNavigate();
@@ -16,7 +15,7 @@ export default function StartScreen() {
         .then(response => response.json())
         .then(data => {
             setRoomCode(data.roomCode);
-            socket.emit('joinRoom', { roomCode: data.roomCode });
+            socket.emit('joinRoom', { roomCode: data.roomCode, teamName: null });
             socket.on("teamJoined", (updatedTeams) => {
                 setTeams(updatedTeams);
             });

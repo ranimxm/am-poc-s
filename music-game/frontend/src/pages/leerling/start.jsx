@@ -1,12 +1,11 @@
-import { useState, useEffect } from "react";
-import io from "socket.io-client";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-
-const socket = io("http://localhost:8080");
+import { RoomContext } from "../../util/room-context";
+import { SocketContext } from "../../util/socket-context";
 
 export default function StudentScreen() {
-    const [roomCode, setRoomCode] = useState("");
-    const [teamName, setTeamName] = useState("");
+    const socket = useContext(SocketContext);
+    const { roomCode, setRoomCode, teamName, setTeamName } = useContext(RoomContext);
     const [step, setStep] = useState(0);
     const navigate = useNavigate();
 

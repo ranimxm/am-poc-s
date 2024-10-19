@@ -22,6 +22,16 @@ export class Room {
   hasGameStarted() {
     return this.isGameStarted;
   }
+
+  updateScore(teamName, score) {
+    if (this.scores[teamName] !== undefined) {
+      this.scores[teamName] += score;
+    }
+  }
+
+  getScores() {
+    return this.scores; 
+  }
 }
 
 export class RoomManager {
@@ -66,5 +76,10 @@ export class RoomManager {
   getRoomTeams(roomCode) {
     const room = this.rooms[roomCode];
     return room ? room.getTeams() : [];
+  }
+
+  getRoomScores(roomCode) {
+    const room = this.rooms[roomCode];
+    return room ? room.getScores() : null;
   }
 }

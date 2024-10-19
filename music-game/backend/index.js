@@ -48,10 +48,12 @@ io.on('connection', (socket) => {
     socket.on('submitChoice', ({ roomCode, teamName, timeTaken }) => {
         const success = roomManager.submitChoice(roomCode, teamName, timeTaken);
         if (success) {
-        const scores = roomManager.getRoomScores(roomCode);
-        io.to(roomCode).emit('updateRankings', scores);
+            const scores = roomManager.getRoomScores(roomCode);
+            console.log(scores);
+            io.to(roomCode).emit('updateRankings', scores);
         }
-  });
+    });
+
     socket.on('disconnect', () => {
         console.log('Client disconnected:', socket.id);
     });
