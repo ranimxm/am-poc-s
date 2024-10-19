@@ -1,21 +1,39 @@
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function Ranking() { 
-    const navigate = useNavigate();
-    
-    const handleFinish = () => {
-        navigate("/docent");
-    };
+export default function Ranking() {
+  const navigate = useNavigate();
+  const [rankings, setRankings] = useState([]);
 
-    return (
-        <div className="screen-container">
-        <h3>Final Rankings</h3>
-        <div className="ranking-list">
-            <p>Team 1: 50</p>
-            <p>Team 2: 25</p>
-            <p>Team 3: 10</p>
-        </div>
-        <button className="continue-button" onClick={handleFinish}>Continue</button>
-        </div>
-    );   
+  useEffect(() => {
+    fetch("/latest-rankings")
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          const sortedRankings = Object.entries(data.rankings)
+            .filter(([team]) => team && team !== "null" && team.trim() !== "")
+            .sort(([, scoreA], [, scoreB]) => scoreB - scoreA);
+          setRankings(sortedRankings);
+        }
+      })
+      .catch(error => {
+        console.error("Error fetching rankings:", error);
+      });
+  }, []);
+
+  const handleFinish = () => {
+    navigate("/docent");
+  };
+
+  return (
+    <div className="screen-container">
+      <h3>Eindstand</h3>
+      <div className="ranking-list">
+        {rankings.map(([team, score], index) => (
+          <p key={index}>{index + 1}. {team}: {score}</p>
+        ))}
+      </div>
+      <button className="continue-button" onClick={handleFinish}>Verder</button>
+    </div>
+  );
 }

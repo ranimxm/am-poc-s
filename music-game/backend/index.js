@@ -27,35 +27,47 @@ app.get("/create-room", (req, res) => {
     res.json({ roomCode });
 });
 
-io.on('connection', (socket) => {
-    console.log('New client connected:', socket.id);
 
-    socket.on('joinRoom', ({ roomCode, teamName }) => {
+app.get("/latest-rankings", (req, res) => {
+  const rooms = Object.values(roomManager.rooms);
+  if (rooms.length > 0) {
+    const room = rooms[0];
+    const scores = room.getScores();
+    res.json({ success: true, rankings: scores });
+  } else {
+    res.json({ success: false, message: "Geen actieve kamers gevonden" });
+  }
+});
+
+io.on("connection", (socket) => {
+    console.log("New client connected:", socket.id);
+
+    socket.on("joinRoom", ({ roomCode, teamName }) => {
         const roomJoined = roomManager.joinRoom(roomCode, teamName);
         if (roomJoined) {
             socket.join(roomCode);
-            io.to(roomCode).emit('teamJoined', roomManager.getRoomTeams(roomCode));
+            io.to(roomCode).emit("teamJoined", roomManager.getRoomTeams(roomCode));
         }
     });
     
-    socket.on('startGame', (roomCode) => {
+    socket.on("startGame", (roomCode) => {
         const gameStarted = roomManager.startGameInRoom(roomCode);
         if (gameStarted) {
-            io.to(roomCode).emit('gameStarted');
+            io.to(roomCode).emit("gameStarted");
         }
     });
 
-    socket.on('submitChoice', ({ roomCode, teamName, timeTaken }) => {
+    socket.on("submitChoice", ({ roomCode, teamName, timeTaken }) => {
         const success = roomManager.submitChoice(roomCode, teamName, timeTaken);
         if (success) {
             const scores = roomManager.getRoomScores(roomCode);
             console.log(scores);
-            io.to(roomCode).emit('updateRankings', scores);
+            io.to(roomCode).emit("updateRankings", scores);
         }
     });
 
-    socket.on('disconnect', () => {
-        console.log('Client disconnected:', socket.id);
+    socket.on("disconnect", () => {
+        console.log("Client disconnected:", socket.id);
     });
 });
 

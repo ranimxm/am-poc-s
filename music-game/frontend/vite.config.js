@@ -14,6 +14,10 @@ export default defineConfig(({ command, mode }) => {
         "/create-room": {
           target: env.VITE_API_URL,
           changeOrigin: true,
+        },
+        "/latest-rankings": {
+          target: env.VITE_API_URL,
+          changeOrigin: true,
         }
       }
     }
