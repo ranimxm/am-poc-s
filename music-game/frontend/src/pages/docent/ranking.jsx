@@ -26,14 +26,22 @@ export default function Ranking() {
   };
 
   return (
-    <div className="screen-container">
-      <h3>Eindstand</h3>
-      <div className="ranking-list">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-yellow-400">
+      <h2 className="text-4xl font-bold text-white mb-6">Eindstand van de Quiz</h2>
+      <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-md">
         {rankings.map(([team, score], index) => (
-          <p key={index}>{index + 1}. {team}: {score}</p>
+          <div key={index} className="flex justify-between mb-4">
+            <span className="text-xl font-semibold text-gray-800">{index + 1}. {team}</span>
+            <span className="text-xl font-semibold text-gray-800">{score} punten</span>
+          </div>
         ))}
       </div>
-      <button className="continue-button" onClick={handleFinish}>Verder</button>
+      <button 
+        className="mt-8 py-2 px-6 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700"
+        onClick={handleFinish}
+      >
+        Terug naar Start
+      </button>
     </div>
   );
 }

@@ -60,35 +60,35 @@ export default function MusicFragment({ musicFragments }) {
     };
 
     return (
-        <div className="screen-container">
+        <div className="flex flex-col items-center justify-center min-h-screen bg-green-500">
             {phase === 'playMusic' && (
-                <div>
-                <h3>Listening to the music fragment...</h3>
-                <div className="emotion-circle">
-                    <span>{timeLeft}</span>
-                </div>
+                <div className="text-center">
+                    <h2 className="text-3xl font-bold text-white mb-6">Muziekfragment {currentTrack + 1}</h2>
+                    <div className="text-white text-6xl mb-6">🎵</div>
+                    <div className="text-4xl font-bold text-white">{timeLeft}</div>
                 </div>
             )}
             {phase === 'discuss' && (
-                <div>
-                <h3>Discuss the music...</h3>
-                <div className="emotion-circle">
-                    <span>{timeLeft}</span>
-                </div>
+                <div className="text-center">
+                    <h2 className="text-3xl font-bold text-white mb-6">Bespreek met de klas</h2>
+                    <div className="text-4xl font-bold text-white">{timeLeft}</div>
                 </div>
             )}
             {phase === 'choose' && (
-                <div>
-                <h3>Choose your feeling in 15 seconds...</h3>
-                <div className="emotion-circle">
-                    <span>{timeLeft}</span>
-                </div>
+                <div className="text-center">
+                    <h2 className="text-3xl font-bold text-white mb-6">Leerlingen maken hun keuze</h2>
+                    <div className="text-4xl font-bold text-white">{timeLeft}</div>
                 </div>
             )}
             {phase === 'ranking' && (
-                <div>
-                <h3>Showing rankings...</h3>
-                <button onClick={handlePhaseChange}>Next Track</button>
+                <div className="text-center">
+                    <h2 className="text-3xl font-bold text-white mb-6">Bekijk de resultaten</h2>
+                    <button 
+                        className="mt-6 py-2 px-6 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700"
+                        onClick={handlePhaseChange}
+                    >
+                        Volgende Fragment
+                    </button>
                 </div>
             )}
             <audio id="music-fragment" preload="auto" />

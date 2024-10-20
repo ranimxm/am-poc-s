@@ -10,11 +10,14 @@ export default function Resultaat() {
     const sortedRankings = filteredRankings.sort(([, scoreA], [, scoreB]) => scoreB - scoreA);
 
     return (
-        <div>
-            <h3>Jij bent nummer:</h3>
-            <div>
+        <div className="flex flex-col items-center justify-center min-h-screen bg-yellow-400">
+            <h2 className="text-4xl font-bold text-white mb-6">Eindstand</h2>
+            <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-md">
                 {sortedRankings.map(([team, score], index) => (
-                    <p key={index}>{index + 1}. {team}: {score}</p>
+                    <div key={index} className="flex justify-between mb-4">
+                        <span className="text-xl font-semibold text-gray-800">{index + 1}. {team}</span>
+                        <span className="text-xl font-semibold text-gray-800">{score} punten</span>
+                    </div>
                 ))}
             </div>
         </div>

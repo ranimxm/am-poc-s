@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function LuisterScherm() {
+export default function Luister() {
   const [phase, setPhase] = useState("playMusic");
   const [timeLeft, setTimeLeft] = useState(15);
   const navigate = useNavigate();
@@ -41,25 +41,23 @@ export default function LuisterScherm() {
         setPhase("choose");
         break;
     }
-   }
+  }
+  
   return (
-    <div className="screen-container">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-green-500">
       {phase === "playMusic" && (
-        <div>
-          <h3>Luisteren...</h3>
-          <div className="emotion-circle">
-            <span>{timeLeft}</span>
-            </div>
+        <div className="text-center">
+          <h2 className="text-3xl font-bold text-white mb-6">Luister naar het fragment</h2>
+          <div className="text-white text-6xl mb-6">🎵</div>
+          <div className="text-4xl font-bold text-white">{timeLeft}</div>
         </div>
       )}
       {phase === "discuss" && (
-        <div>
-          <h3>Discuss the music...</h3>
-          <div className="emotion-circle">
-            <span>{timeLeft}</span>
-          </div>
+        <div className="text-center">
+          <h2 className="text-3xl font-bold text-white mb-6">Bespreek met je team</h2>
+          <div className="text-4xl font-bold text-white">{timeLeft}</div>
         </div>
-            )}
+      )}
     </div>
   );
 };
