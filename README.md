@@ -2,13 +2,6 @@
 
 This repository contains multiple projects completed during the semester. Below is an overview of each folder and a brief description of what it includes.
 
-## Table of Contents
-1. [Project 1: Music Education Tool](#project-1-music-education-tool)
-2. [Project 2: Example Project](#project-2-example-project)
-3. [Project 3: Another Example](#project-3-another-example)
-4. [How to Run](#how-to-run)
-5. [Feedback & Contributions](#feedback--contributions)
-
 ---
 
 ## Project 1: [Music Education Tool - bewegingsensor](https://github.com/ranimxm/am-poc-s/tree/main/flask-tensorflow)
