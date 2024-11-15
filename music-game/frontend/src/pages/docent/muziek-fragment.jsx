@@ -46,11 +46,7 @@ export default function MusicFragment({ musicFragments }) {
                 setPhase("choose");
                 break;
             case "choose":
-                if (currentTrack < musicFragments.length - 1) {
-                    setPhase("ranking");
-                } else {
-                    navigate("/docent/rankings");
-                }
+                navigate("/docent/rankings");
                 break;
             case "ranking":
                 setCurrentTrack((prevTrack) => prevTrack + 1);
@@ -70,13 +66,13 @@ export default function MusicFragment({ musicFragments }) {
             )}
             {phase === 'discuss' && (
                 <div className="text-center">
-                    <h2 className="text-3xl font-bold text-white mb-6">Bespreek met de klas</h2>
+                    <h2 className="text-3xl font-bold text-white mb-6">Bespreek met je team</h2>
                     <div className="text-4xl font-bold text-white">{timeLeft}</div>
                 </div>
             )}
             {phase === 'choose' && (
                 <div className="text-center">
-                    <h2 className="text-3xl font-bold text-white mb-6">Leerlingen maken hun keuze</h2>
+                    <h2 className="text-3xl font-bold text-white mb-6">Maak je keuze</h2>
                     <div className="text-4xl font-bold text-white">{timeLeft}</div>
                 </div>
             )}
