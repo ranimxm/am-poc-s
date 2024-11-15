@@ -16,13 +16,6 @@ This project focuses on developing an interactive tool to help primary school ch
 **Folder:** `websocket-server`  
 This project uses basic socket.io 
 
----
-
-## How to Run
-Each project in this repository contains its own set of instructions for setup and execution. Please refer to the specific `README.md` file within each folder for detailed steps on how to run the project.
-
----
-
-## Feedback & Contributions
-If you have any feedback, suggestions, or would like to contribute to one of the projects, feel free to create an issue or submit a pull request.
-
+## Project 4: [AR with dots - AR](https://github.com/ranimxm/am-poc-s/tree/main/ar-dot)
+**Folder:** `ar-dot`  
+This project uses a-frames, vanilla js and tensorflow to recognize objects
