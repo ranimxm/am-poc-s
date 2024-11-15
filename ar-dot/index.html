@@ -7,12 +7,30 @@
     <!-- cdn -->
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.7.7/aframe/build/aframe-ar.min.js"></script>
 
     <!-- js files -->
     <script src="script.js" defer></script>
     <script src="startVideo.js" defer></script>
+    <style>
+        body{
+            margin: 0;
+            overflow: hidden;
+        }
+        #video{
+            display: none;
+        }
+        #arjsDebugUIContainer{
+            display: none;
+        }
+    </style>
 </head>
 <body>
+    <a-scene embedded arjs="sourceType: webcam;" vr-mode-ui="enabled: false">
+        <a-camera-static></a-camera-static>
+        <a-sphere id="dot" radius="0.1" color="white" visible="false"></a-sphere>
+    </a-scene>
     <video id="video" autoplay></video>
 </body>
 </html>
