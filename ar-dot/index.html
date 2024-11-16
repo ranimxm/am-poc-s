@@ -11,7 +11,7 @@
     <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.7.7/aframe/build/aframe-ar.min.js"></script>
 
     <!-- js files -->
-    <script src="script.js" defer></script>
+    <script type="module" src="script.js" defer></script>
     <script src="startVideo.js" defer></script>
     <style>
         body{
@@ -24,13 +24,33 @@
         #arjsDebugUIContainer{
             display: none;
         }
+        .popup{
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
     </style>
 </head>
 <body>
     <a-scene embedded arjs="sourceType: webcam;" vr-mode-ui="enabled: false">
-        <a-camera-static></a-camera-static>
-        <a-sphere id="dot" radius="0.1" color="white" visible="false"></a-sphere>
+        <a-camera-static>
+            <a-cursor></a-cursor>
+        </a-camera-static>
+        <a-sphere id="dot" radius="0.1" color="red" visible="false"></a-sphere>
     </a-scene>
     <video id="video" autoplay></video>
+    <div id="popup" class="popup">
+        <h2 id="popup-title"></h2>
+        <p id="popup-description"></p>
+        <button id="close-popup">Close</button>
+    </div>
+</div>
 </body>
 </html>
