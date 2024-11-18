@@ -14,41 +14,31 @@ class objectHandler {
 
     setPosition() {
         const bbox = this.prediction.bbox;
-        console.log(this.prediction)
         const x = bbox[0] + bbox[2] / 2;
         const y = bbox[1] + bbox[3] / 2;
-        const normalizedX = (x / this.video.videoWidth) * 4 - 2;
-        const normalizedY = -((y / this.video.videoHeight) * 4 - 4);
+        const videoAspectRatio = this.video.videoWidth / this.video.videoHeight;
+        const normalizedX = (x / this.video.videoWidth - 0.5) * videoAspectRatio * 2;
+        const normalizedY = -(y / this.video.videoHeight - 0.5) * 2;
         this.dot.setAttribute("position", `${normalizedX} ${normalizedY} -3`);
-        return true;
+        return this.dot.getAttribute("position");
     } 
 
-    handlePerson() {
-        return this.setPosition();
-    }
-    handleCat() {
-        return this.setPosition();
-    }
-    handleCellPhone() {
-        return this.setPosition();
-    }
-    handleDefault() {
-        return false;
+    setClass(className) {
+        this.dot.setAttribute("data-class", className);
+        return this.dot.getAttribute("data-class");
     }
 
-    execute() {
+    init() {
         switch (this.prediction.class) {
             case "person":
-                return this.handlePerson();
             case "cat":
-                return this.handleCat();
             case "Cell phone":
-                return this.handleCellPhone();
+                this.setPosition();
+                return this.setClass(this.prediction.class);
             default:
-                return this.handleDefault();
+                return false;
         }
     }
-
 };
 
 const detectPose = async () => {
@@ -61,12 +51,13 @@ const detectPose = async () => {
         const predictions = await model.detect(video);        
         predictions.forEach(prediction => {
             const handler = new objectHandler(prediction, video, dot);
-            detectPose = handler.execute();
-        });
+            if (handler.init()) {
+                detectPose = true;
+            }
+            });
         dot.setAttribute("visible", detectPose);
     }, 1000);
-};    
-
+};
 
 detectPose();
 
@@ -75,7 +66,6 @@ AFRAME.registerComponent("popup-handler", {
     init: function () {
         const dot = this.el;
         dot.addEventListener("click", () => {
-            console.log("Dot clicked!");
             const objectClass = dot.getAttribute("data-class");
             if (objectClass && objectInfo[objectClass]) {
                 popupTitle.textContent = objectInfo[objectClass].title;
