@@ -2,14 +2,44 @@ const objectInfo = {
   "chair": {
     description: "This CHAIR has an impact on the environment! Consider encouraging sustainable habits.",
     actionText: "Take action",
+    secondaryPopup: {
+      title: "Take Action",
+      description:
+        "Select any action to add it to your list. On the right you can see the overall impact it will have on the environment.",
+      items: [
+        { points: "+3 pts", text: "Switch to eco-friendly furniture" },
+        { points: "+2 pts", text: "Donate unused chairs" },
+        { points: "+1 pts", text: "Repair instead of replace" },
+      ],
+    },
   },
   "person": {
     description: "Cats are lovely creatures!",
     actionText: "Take action",
+    secondaryPopup: {
+      title: "Take Action",
+      description:
+        "Select an action to reduce your personal carbon footprint.",
+      items: [
+        { points: "+3 pts", text: "Use public transport" },
+        { points: "+3 pts", text: "Reduce single-use plastics" },
+        { points: "+2 pts", text: "Plant a tree" },
+      ],
+    },
   },
   "bottle": {
     description: "This BOTTLE has an environmental impact. Consider recycling old devices.",
     actionText: "Learn more",
+    secondaryPopup: {
+      title: "Learn More",
+      description:
+        "This bottle has an environmental impact. Learn how you can minimize it.",
+      items: [
+        { points: "+3 pts", text: "Recycle properly" },
+        { points: "+2 pts", text: "Use reusable bottles" },
+        { points: "+2 pts", text: "Support recycling initiatives" },
+      ],
+    },
   },
 };
 
@@ -17,6 +47,14 @@ const popup = document.querySelector(".popup");
 const popupDescription = document.querySelector(".popup__description");
 const closePopup = document.querySelector(".popup__close-btn");
 const popupActionBtn = document.querySelector(".popup__action-btn");
+
+const secondaryPopup = document.querySelector(".secondary-popup");
+const secondaryPopupTitle = document.querySelector(".secondary-popup__title");
+const secondaryPopupDescription = document.querySelector(
+    ".secondary-popup__description"
+);
+const secondaryPopupItems = document.querySelector(".secondary-popup__items");
+const secondaryPopupClose = document.querySelector(".secondary-popup__close-btn");
 
 const setupCamera = async () => {
   const video = document.querySelector("#video");
@@ -99,9 +137,7 @@ AFRAME.registerComponent("clickhandler", {
         const info = objectInfo[objectClass];
         popupDescription.textContent = info.description;
         popupActionBtn.textContent = info.actionText;
-        popupActionBtn.onclick = () => {
-          alert(`You chose: ${info.actionText}`);
-        };
+        popupActionBtn.setAttribute("data-class", objectClass);
         popup.style.display = "block";
       }
     };
@@ -113,5 +149,35 @@ AFRAME.registerComponent("clickhandler", {
 document.querySelector("#dot").setAttribute("clickhandler", "");
 
 closePopup.addEventListener("click", () => {
+  popup.style.display = "none";
+});
+
+const openSecondaryPopup = (objectClass) => {
+  const detail = objectInfo[objectClass].secondaryPopup;
+  secondaryPopupTitle.textContent = detail.title;
+  secondaryPopupDescription.textContent = detail.description;
+  secondaryPopupItems.innerHTML = "";
+
+  detail.items.forEach((item) => {
+    const li = document.createElement("li");
+    li.className = "secondary-popup__item";
+    li.innerHTML = `
+    <span class="secondary-popup__points">${item.points}</span> 
+    <p class="secondary-popup__item.text">${item.text}</p>
+    `;
+    secondaryPopupItems.appendChild(li);
+  });
+  secondaryPopup.classList.add("secondary-popup--active");
+};
+
+popupActionBtn.onclick = () => {
+  const objectClass = popupActionBtn.getAttribute("data-class");
+  if (objectClass) {
+    openSecondaryPopup(objectClass);
     popup.style.display = "none";
+  }
+};
+
+secondaryPopupClose.addEventListener("click", () => {
+  secondaryPopup.classList.remove("secondary-popup--active");
 });

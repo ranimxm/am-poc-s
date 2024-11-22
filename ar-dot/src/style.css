@@ -1,6 +1,9 @@
 :root {
   --bg-color-white: #FAF9F6;
   --heading-text: #1D1B20;
+  --main-theme: #EB9001;
+  --orange-bg: #FFD176;
+  --grey-outline: #79747E;
 }
 body {
   margin: 0;
@@ -8,10 +11,9 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
-#video {
+video {
   display: none;
 }
-
 a-scene {
   width: 100vw;
   height: 100vh;
@@ -60,4 +62,98 @@ a-scene {
   font-size: 16px;
   font-weight: bold;
   background-color: transparent;
+}
+
+.secondary-popup {
+  position: fixed;
+  bottom: -100%;
+  left: 0;
+  width: 90%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: var(--bg-color-white);
+  border-radius: 28px 28px 0 0;
+  padding: 20px;
+  height: auto;
+  transition: bottom 0.4s ease-in-out;
+}
+
+.secondary-popup--active {
+  bottom: 0;
+}
+
+.secondary-popup__header {
+  width: 100%;
+    display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+.secondary-popup__title {
+  color: var(--heading-text);
+  font-size: 24px;
+  text-align: center;
+  margin: 0;
+  padding-top: .6em;
+}
+
+.secondary-popup__description {
+  padding-left: 1em;
+  width: 100%;
+  font-size: 16px;
+}
+
+.secondary-popup__items {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  width: 95%;
+}
+
+.secondary-popup__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+  width: 100%;
+  gap: 1em;
+  color: var(--heading-text);
+}
+
+.grey-line {
+  border-bottom: solid 2px var(--grey-outline);
+  width: 10%;
+}
+.secondary-popup__item span {
+  font-weight: bold;
+  padding: .5em;
+  border: 1px solid var(--main-theme);
+  background-color: var(--orange-bg);
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  font-weight: 400;
+  width: 20%;
+}
+
+.secondary-popup__item p {
+  border-bottom: solid 1px #CAC4D0;
+  margin: 0;
+  padding: 1em;
+  width: 70%;
+}
+.secondary-popup__close-btn {
+  background-color: var(--main-theme);
+  border: none;
+  width: 95%;
+  padding: 15px;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  font-size: 16px;
+  margin-top: 15px;
 }
