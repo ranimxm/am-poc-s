@@ -18,9 +18,14 @@ const popupTitle = document.querySelector("#popup-title");
 const popupDescription = document.querySelector("#popup-description");
 const closePopup = document.querySelector("#close-popup");
 
-const setupCamera = async() => {
+const setupCamera = async () => {
+    const video = document.querySelector("#video");
     const stream = await navigator.mediaDevices.getUserMedia({
-        video: true
+      video: {
+        facingMode: "environment", 
+        width: { ideal: 640 },
+        height: { ideal: 480 },
+      },
     });
     video.srcObject = stream;
 
@@ -88,15 +93,17 @@ detectPose();
 // register A-frame
 AFRAME.registerComponent("clickhandler", {
     init: function () {
-        this.el.addEventListener("click", () => {
+      const showPopup = () => {
             const objectClass = this.el.getAttribute("data-class");
             if (objectClass && objectInfo[objectClass]) {
-                popupTitle.textContent = objectInfo[objectClass].title;
-                popupDescription.textContent = objectInfo[objectClass].description;
-                popup.style.display = "block";
+              popupTitle.textContent = objectInfo[objectClass].title;
+              popupDescription.textContent = objectInfo[objectClass].description;
+              popup.style.display = "block";
             }
-        });
-    }
+          };
+          this.el.addEventListener("click", showPopup);
+          this.el.addEventListener("touchstart", showPopup);
+  }
 });
 
 document.querySelector("#dot").setAttribute("clickhandler", "");
