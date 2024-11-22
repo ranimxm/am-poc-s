@@ -19,15 +19,18 @@
         vr-mode-ui="enabled: false"
 		embedded
 		arjs='sourceType: webcam; debugUIEnabled: false; videoTexture: true;'>
-        <a-sphere id="dot" position="0.40 -1 -15" radius="0.1" clickhandler color="red" visible="true"></a-sphere>
+        <a-sphere id="dot" position="0.40 -1 -15" radius="0.1" clickhandler color="#EB9001"></a-sphere>
         <a-camera></a-camera>
     </a-scene>
     <video id="video" autoplay></video>
-    <div id="popup" class="popup">
-        <h2 id="popup-title"></h2>
-        <p id="popup-description"></p>
-        <button id="close-popup">Close</button>
+    <div class="popup">
+        <button class="popup__close-btn">X</button>
+        <div class="popup__content">
+            <p class="popup__description">This car has an impact on the environment! Cars contribute to CO₂ emissions and energy consumption</p>
+            <button class="popup__action-btn"></button>
+        </div>
     </div>
+
 
     <script type="module" src="/src/main.js"></script>
 </body>

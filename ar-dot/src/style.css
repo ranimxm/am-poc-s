@@ -1,6 +1,11 @@
+:root {
+  --bg-color-white: #FAF9F6;
+  --heading-text: #1D1B20;
+}
 body {
   margin: 0;
   overflow: hidden;
+  font-family: 'Roboto', sans-serif;
 }
 
 #video {
@@ -15,12 +20,44 @@ a-scene {
 .popup {
   display: none;
   position: fixed;
-  top: 50%;
-  left: 50%;
+  top: 50dvh;
+  left: 50dvw;
   transform: translate(-50%, -50%);
-  background-color: white;
-  border: 1px solid #ccc;
+  background-color: var(--bg-color-white);
+  border-radius: 28px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   z-index: 1000;
+  padding: 4dvh 10dvw;
+  width: 40%;
+  max-width: 40%;
+}
+.popup__description {
+  padding-top: 4dvh;
+  padding-bottom: 4dvh;
+  border-bottom: 1px solid #CAC4D0;
+}
+.popup__close-btn{
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding-top: 3dvh;
+  padding-right: 4dvw;
+  border: none;
+  font-weight: bold;
+  font-size: 16px;
+  background-color: transparent;
+}
+.popup__content {
+  display: flex;
+  flex-direction: column;
+}
+
+.popup__action-btn {
+  border: none;
+  color: var(--heading-text);
+  font-size: 16px;
+  font-weight: bold;
+  background-color: transparent;
 }
