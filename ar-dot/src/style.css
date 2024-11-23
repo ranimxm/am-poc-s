@@ -125,7 +125,8 @@ a-scene {
 }
 
 .grey-line {
-  border-bottom: solid 2px var(--grey-outline);
+  border-bottom: solid 4px var(--grey-outline);
+  border-radius: 8px;
   width: 10%;
 }
 .secondary-popup__item span {
