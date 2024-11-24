@@ -3,7 +3,7 @@ const objectInfo = {
     description: "This CHAIR has an impact on the environment! Consider encouraging sustainable habits.",
     actionText: "Take action",
     secondaryPopup: {
-      title: "Take Action",
+      title: "Take action",
       description:
         "Select any action to add it to your list. On the right you can see the overall impact it will have on the environment.",
       items: [
@@ -14,34 +14,78 @@ const objectInfo = {
     },
   },
   "person": {
-    description: "Cats are lovely creatures!",
+    description: "Every person can reduce their carbon footprint. Take steps to live sustainably!",
     actionText: "Take action",
     secondaryPopup: {
-      title: "Take Action",
+      title: "Take action",
       description:
-        "Select an action to reduce your personal carbon footprint.",
+        "Select an action to minimize your environmental impact.",
       items: [
-        { points: "+3 pts", text: "Use public transport" },
+        { points: "+3 pts", text: "Use public transport instead of driving" },
         { points: "+3 pts", text: "Reduce single-use plastics" },
-        { points: "+2 pts", text: "Plant a tree" },
+        { points: "+2 pts", text: "Plant a tree in your community" },
       ],
     },
   },
   "bottle": {
-    description: "This BOTTLE has an environmental impact. Consider recycling old devices.",
+    description: "This BOTTLE impacts the environment. Consider reducing waste and promoting recycling.",
     actionText: "Learn more",
     secondaryPopup: {
-      title: "Learn More",
+      title: "Learn more",
       description:
-        "This bottle has an environmental impact. Learn how you can minimize it.",
+        "Select actions to minimize waste and improve recycling efforts.",
       items: [
-        { points: "+3 pts", text: "Recycle properly" },
-        { points: "+2 pts", text: "Use reusable bottles" },
-        { points: "+2 pts", text: "Support recycling initiatives" },
+        { points: "+3 pts", text: "Recycle bottles properly" },
+        { points: "+2 pts", text: "Switch to reusable bottles" },
+        { points: "+2 pts", text: "Support local recycling programs" },
+      ],
+    },
+  },
+  "plant": {
+    description: "This PLANT contributes to a greener planet. Protect and nurture it!",
+    actionText: "Learn more",
+    secondaryPopup: {
+      title: "Learn more",
+      description:
+        "Select actions to support plant health and contribute to environmental sustainability.",
+      items: [
+        { points: "+5 pts", text: "Plant a tree in your backyard or park" },
+        { points: "+4 pts", text: "Water plants regularly to maintain their health" },
+        { points: "+3 pts", text: "Add compost to enrich soil for better growth" },
+      ],
+    },
+  },
+  "tree": {
+    description: "TREES are essential for a healthy planet. Protect and grow them for a sustainable future.",
+    actionText: "Take action",
+    secondaryPopup: {
+      title: "Take action",
+      description:
+        "Trees absorb carbon dioxide and provide oxygen. Select actions to protect and grow trees.",
+      items: [
+        { points: "+5 pts", text: "Plant a tree to expand green cover" },
+        { points: "+4 pts", text: "Avoid cutting down healthy trees" },
+        { points: "+3 pts", text: "Join a tree-planting initiative" },
+      ],
+    },
+  },
+  "car": {
+    description: "CARS contribute to greenhouse gas emissions. Take steps to reduce their environmental impact.",
+    actionText: "Take action",
+    secondaryPopup: {
+      title: "take action",
+      description:
+        "Select actions to make your car usage more eco-friendly.",
+      items: [
+        { points: "+5 pts", text: "Switch to an electric or hybrid vehicle" },
+        { points: "+4 pts", text: "Carpool to reduce the number of vehicles on the road" },
+        { points: "+3 pts", text: "Ensure regular vehicle maintenance to optimize fuel efficiency" },
+        { points: "+2 pts", text: "Use public transport or cycle instead of driving short distances" },
       ],
     },
   },
 };
+
 
 const popup = document.querySelector(".popup");
 const popupDescription = document.querySelector(".popup__description");
@@ -98,6 +142,7 @@ class objectHandler {
 
   setClass(className) {
     this.dot.setAttribute("data-class", className);
+    console.log(`Class set to: ${className}`);
     return this.dot.getAttribute("data-class");
   }
 
@@ -106,6 +151,9 @@ class objectHandler {
       case "person":
       case "chair":
       case "bottle":
+      case "cat":
+      case "tree":
+      case "car":
         this.setPosition();
         return this.setClass(this.prediction.class);
       default:
@@ -122,7 +170,9 @@ const detectPose = async () => {
 
     setInterval(async () => {
       const predictions = await model.detect(video);
+      console.log("Predictions: ", predictions);
       predictions.forEach(prediction => {
+        console.log("Prediction: ", prediction);
         const handler = new objectHandler(prediction, video, dot);
         if (handler.init()) {
           detectPose = true;
