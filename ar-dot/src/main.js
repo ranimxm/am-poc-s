@@ -56,6 +56,12 @@ const secondaryPopupDescription = document.querySelector(
 const secondaryPopupItems = document.querySelector(".secondary-popup__items");
 const secondaryPopupClose = document.querySelector(".secondary-popup__close-btn");
 
+let totalPoints = 0;
+const maxPoints = 100;
+const progressBar = document.querySelector(".progress-bar__container");
+const progressBarTop = document.querySelector(".progress-bar__top");
+const progressBarBottom = document.querySelector(".world-icon__bottom");
+
 const setupCamera = async () => {
   const video = document.querySelector("#video");
   const stream = await navigator.mediaDevices.getUserMedia({
@@ -165,9 +171,60 @@ const openSecondaryPopup = (objectClass) => {
     <span class="secondary-popup__points">${item.points}</span> 
     <p class="secondary-popup__item.text">${item.text}</p>
     `;
+
+    li.addEventListener("click", () => {
+      const points = parseInt(item.points.replace("+", "").replace(" pts", "").trim());  
+      totalPoints += points;
+      totalPoints = Math.min(totalPoints, maxPoints);
+      console.log(`Points Added: ${points}, Total Points: ${totalPoints}`);
+      updateTopGlobe(totalPoints, points);
+      updateGlobe(totalPoints);
+      secondaryPopup.classList.remove("secondary-popup--active");
+    });
     secondaryPopupItems.appendChild(li);
   });
   secondaryPopup.classList.add("secondary-popup--active");
+};
+
+const updateTopGlobe = (points, now) => {
+  const topGlobeFill = document.querySelector("#top-globe-fill"); 
+  const topGlobeWrapper = document.querySelector(".top-globe-wrapper");
+  const pp = document.querySelector(".progress-bar");
+  const pointsNotification = document.createElement("div");
+
+  const fillHeight = (points / maxPoints) * 55;
+  const fillY = 55 - fillHeight;
+
+  topGlobeFill.setAttribute("height", fillHeight);
+  topGlobeFill.setAttribute("y", fillY);
+
+  topGlobeWrapper.style.opacity = 1;
+  topGlobeWrapper.style.visibility = "visible";
+
+  pointsNotification.className = "points-notification";
+  pointsNotification.textContent = `+${now} pts`;
+  pp.appendChild(pointsNotification);
+
+  setTimeout(() => {
+    if (topGlobeFill && pointsNotification) {
+      topGlobeWrapper.style.opacity = 0;
+      topGlobeWrapper.style.visibility = "hidden";
+
+      pointsNotification.style.opacity = 0;
+      setTimeout(() => pointsNotification.remove(), 500);
+    }
+   }, 4000);
+
+};
+
+const updateGlobe = (points) => {
+    const globeFill = document.querySelector("#globe-fill");
+
+    const fillHeight = (points / maxPoints) * 55;
+    const fillY = 55 - fillHeight;
+
+    globeFill.setAttribute("height", fillHeight);
+    globeFill.setAttribute("y", fillY);
 };
 
 popupActionBtn.onclick = () => {
